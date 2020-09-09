@@ -1,2 +1,4 @@
+TAG = $(shell git rev-parse --short HEAD)
+
 zip:
-	zip -r ../$(notdir $(CURDIR)).zip . -x "*.git*" -x "*terraform*" -x "*~"
+	zip -r ../$(notdir $(CURDIR))-$(TAG).zip . -x "*.git*" -x "*terraform*" -x "*~"
