@@ -1,7 +1,8 @@
-TAG = $(shell git rev-parse --short HEAD)
+TAG    = $(shell git rev-parse --short HEAD)
+BRANCH = $(shell git branch --show-current)
 
 zip:
-	zip -r ../$(notdir $(CURDIR))-$(TAG).zip . -x "*.git*" -x "*terraform*" -x "*~"
+	zip -r ../$(notdir $(CURDIR))-$(BRANCH)-$(TAG).zip . -x "*.git*" -x "*terraform*" -x "*~"
 
 clean:
 	rm -vf ../$(notdir $(CURDIR))*.zip
