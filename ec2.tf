@@ -6,7 +6,7 @@ resource "random_string" "ec2" {
 resource "aws_security_group" "ec2" {
   name        = "${terraform.workspace}_ec2_security_group_${random_string.ec2.result}"
   vpc_id      = aws_vpc.vpc.id
-  description = "${terraform.workspace} ec2 security group"
+  description = "${terraform.workspace} EC2 security group"
   tags        = { Name = "${terraform.workspace} ec2 security group" }
 
   ingress {
