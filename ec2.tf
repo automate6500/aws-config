@@ -10,8 +10,22 @@ resource "aws_security_group" "ec2" {
   tags        = { Name = "${terraform.workspace} ec2 security group" }
 
   ingress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 80
+    to_port     = 80
+    protocol    = "6"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "6"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "TODO: Fix this rule after testing! :D"
@@ -34,8 +48,8 @@ resource "aws_instance" "web" {
   key_name                    = aws_key_pair.key.key_name
   monitoring                  = false
   subnet_id                   = aws_subnet.subnets[each.key].id
-  tags                        = { Name = "${terraform.workspace}-web${each.key}" }
-  user_data                   = file("user_data.sh")
+  tags                        = { Name = "${terraform.workspace}-web-${each.key}" }
+  user_data                   = file("${path.module}/user_data.sh")
   vpc_security_group_ids      = [aws_security_group.ec2.id]
 
   lifecycle {
