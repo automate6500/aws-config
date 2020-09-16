@@ -14,7 +14,7 @@ resource "aws_security_group" "ec2" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "The doors of the house are open"
+    description = "TODO: Fix this rule after testing! :D"
   }
 
   egress {
