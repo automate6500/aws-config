@@ -1,13 +1,18 @@
 TAG    = $(shell git rev-parse --short HEAD)
 BRANCH = $(shell git branch --show-current)
 
-zip: check
+zip: check docs
 	$(shell [ $(BRANCH) == 'default' ])
-	zip -r ../$(notdir $(CURDIR))-$(BRANCH)-$(TAG).zip . -x "*.git*" -x "*terraform*" -x "*~"
-	zip -r ../$(notdir $(CURDIR)).zip . -x "*.git*" -x "*terraform*" -x "*~"
+	mkdir -p ../zips
+	zip -r  ../zips/$(notdir $(CURDIR))-$(BRANCH)-$(TAG).zip . -x "*.git*" -x "*terraform*" -x "*~"
+	zip -r  ../zips/$(notdir $(CURDIR)).zip . -x "*.git*" -x "*terraform*" -x "*~"
+	ls -ltr ../zips/
 
 clean:
-	rm -vf ../$(notdir $(CURDIR))*.zip
+	rm -vf ../zips/$(notdir $(CURDIR))*.zip
+
+docs:
+	terraform-docs markdown . > README.md
 
 check:
 	@ if [ "${BRANCH}" != "default" ]; then \
